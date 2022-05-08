@@ -2,17 +2,21 @@ import yfinance
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from tkinter import *
-from tkinter import ttk
 from PIL import Image, ImageTk
 
-
+# Delcare global array that is populated later
 fields = {}
 
 def validateTicker(fields):
+     # Makes a call to the yfinance api, receiving a pandas dataframe
     stock = yfinance.Ticker(fields["ticker"].get())
     if (stock.info['regularMarketPrice'] == None):
+        # The API call is bandwidth intensive, so instead of making another
+        # call in a seperate function, this function returns a tuple containing
+        # both the result and the pandas dataframe
         return (False, stock)
     return (True, stock)
+
 
 def makeAndPrintChart():
     global fields
